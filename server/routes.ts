@@ -269,10 +269,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           studentData.studentId = `ST-${year}${month}-${random}`;
         }
 
-        // Convert date string to Date if provided
+        // Validate date format but keep it as string
         if (studentData.dateOfBirth) {
           try {
-            studentData.dateOfBirth = parse(studentData.dateOfBirth, "yyyy-MM-dd", new Date());
+            // Check if the date is valid by parsing it, but keep it as a string
+            parse(studentData.dateOfBirth, "yyyy-MM-dd", new Date());
+            // Keep the original string format which is what the database expects
           } catch (e) {
             // If parsing fails, set to null
             studentData.dateOfBirth = null;
